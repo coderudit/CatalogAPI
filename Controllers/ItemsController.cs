@@ -1,4 +1,5 @@
-﻿using CatalogAPI.Dtos;
+﻿using CatalogAPI.Common;
+using CatalogAPI.Dtos;
 using CatalogAPI.Models;
 using CatalogAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +25,7 @@ namespace CatalogAPI.Controllers
             if (items is null)
                 return NotFound();
 
-            var itemsDto = items.Select(item => new ItemDto
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                CreatedDate = item.CreatedDate
-            });
+            var itemsDto = items.Select(item => item.AsDto());
 
             return Ok(itemsDto);
         }
@@ -42,15 +37,7 @@ namespace CatalogAPI.Controllers
             if (item is null)
                 return NotFound();
 
-            var itemDto = new ItemDto
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                CreatedDate = item.CreatedDate
-            };
-
-            return Ok(itemDto);
+            return Ok(item.AsDto());
         }
     }
 }
