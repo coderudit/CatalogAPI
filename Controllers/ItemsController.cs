@@ -49,5 +49,39 @@ namespace CatalogAPI.Controllers
 
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto());
         }
+
+        //PUT /items
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(Guid id, UpdateItemDto updateItem)
+        {
+            var existingItem = _repository.GetItem(id);
+
+            if (existingItem is null)
+                return NotFound();
+
+            var updatedItem = existingItem with
+            {
+                Name = updateItem.Name,
+                Price = updateItem.Price
+            };
+
+            _repository.UpdateItem(updatedItem);
+
+            return NoContent();
+        }
+
+        //DELETE /items
+        [HttpDelete("{id}")]
+        public ActionResult DeleteItem(Guid id)
+        {
+            var existingItem = _repository.GetItem(id);
+
+            if (existingItem is null)
+                return NotFound();
+
+            _repository.DeleteItem(id);
+
+            return NoContent();
+        }
     }
 }

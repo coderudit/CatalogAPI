@@ -24,5 +24,17 @@ namespace CatalogAPI.Repository
         {
             items.Add(item);
         }
+
+        public void UpdateItem(Item item)
+        {
+            int itemIndex = items.FindIndex(x => item.Id == x.Id);
+            items[itemIndex] = item; 
+        }
+
+        public void DeleteItem(Guid id)
+        {
+            int itemIndex = items.FindIndex(x => x.Id == id );
+            items.RemoveAt(itemIndex);
+        }
     }
 }

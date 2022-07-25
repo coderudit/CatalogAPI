@@ -26,5 +26,15 @@ namespace CatalogAPI.Common
                 CreatedDate = DateTimeOffset.UtcNow
             };
         }
+
+        public static Item AsModel(this UpdateItemDto item, Guid id)
+        {
+            return new Item
+            {
+                Id = id,
+                Name = item.Name,
+                Price = item.Price
+            };
+        }
     }
 }
