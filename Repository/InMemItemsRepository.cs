@@ -2,7 +2,7 @@
 
 namespace CatalogAPI.Repository
 {
-    public class InMemItemsRepository
+    public class InMemItemsRepository: IRepository
     {
         private readonly List<Item> items = new() { 
             new Item{Id = Guid.NewGuid(), Name ="Potion", Price = 9, CreatedDate = DateTimeOffset.UtcNow},

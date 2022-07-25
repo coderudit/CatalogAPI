@@ -8,24 +8,30 @@ namespace CatalogAPI.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly InMemItemsRepository repository;
+        private readonly IRepository _repository;
 
-        public ItemsController()
+        public ItemsController(IRepository repository)
         {
-            repository = new InMemItemsRepository();
+            _repository = repository;
         }
 
         //GET /items
         [HttpGet]
-        public IEnumerable<Item> GetItems()
+        public ActionResult<IEnumerable<Item>> GetItems()
         {
-            return repository.GetItems();
+            var items = _repository.GetItems();
+            if (items is null)
+                return NotFound();
+            return Ok(items);
         }
 
         //GET /items/id
         [HttpGet("{id}")]
-        public Item? GetItem(Guid id) {
-            return repository.GetItem(id);
+        public ActionResult<Item> GetItem(Guid id) {
+            var item = _repository.GetItem(id);
+            if (item is null)
+                return NotFound();
+            return Ok(_repository.GetItem(id));
         }
     }
 }
