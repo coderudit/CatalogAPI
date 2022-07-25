@@ -1,6 +1,5 @@
 ﻿using CatalogAPI.Common;
 using CatalogAPI.Dtos;
-using CatalogAPI.Models;
 using CatalogAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,12 +31,23 @@ namespace CatalogAPI.Controllers
 
         //GET /items/id
         [HttpGet("{id}")]
-        public ActionResult<ItemDto> GetItem(Guid id) {
+        public ActionResult<ItemDto> GetItem(Guid id)
+        {
             var item = _repository.GetItem(id);
             if (item is null)
                 return NotFound();
 
             return Ok(item.AsDto());
+        }
+
+        //POST /items
+        [HttpPost]
+        public ActionResult<ItemDto> CreateItem(CreateItemDto createItem)
+        {
+            var item = createItem.AsModel();
+            _repository.CreateItem(item);
+
+            return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto());
         }
     }
 }
