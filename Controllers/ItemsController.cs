@@ -1,4 +1,5 @@
-﻿using CatalogAPI.Models;
+﻿using CatalogAPI.Dtos;
+using CatalogAPI.Models;
 using CatalogAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,21 +18,39 @@ namespace CatalogAPI.Controllers
 
         //GET /items
         [HttpGet]
-        public ActionResult<IEnumerable<Item>> GetItems()
+        public ActionResult<IEnumerable<ItemDto>> GetItems()
         {
             var items = _repository.GetItems();
             if (items is null)
                 return NotFound();
-            return Ok(items);
+
+            var itemsDto = items.Select(item => new ItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                CreatedDate = item.CreatedDate
+            });
+
+            return Ok(itemsDto);
         }
 
         //GET /items/id
         [HttpGet("{id}")]
-        public ActionResult<Item> GetItem(Guid id) {
+        public ActionResult<ItemDto> GetItem(Guid id) {
             var item = _repository.GetItem(id);
             if (item is null)
                 return NotFound();
-            return Ok(_repository.GetItem(id));
+
+            var itemDto = new ItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                CreatedDate = item.CreatedDate
+            };
+
+            return Ok(itemDto);
         }
     }
 }
