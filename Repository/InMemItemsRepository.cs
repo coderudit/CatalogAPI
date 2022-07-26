@@ -10,31 +10,34 @@ namespace CatalogAPI.Repository
             new Item{Id = Guid.NewGuid(), Name ="Bronze Shield", Price = 18, CreatedDate = DateTimeOffset.UtcNow}
         };
 
-        public IEnumerable<Item> GetItems()
+        public async Task<IEnumerable<Item>> GetItemsAsync()
         {
-            return items;
+            return await Task.FromResult(items);
         }
 
-        public Item? GetItem(Guid id)
+        public async Task<Item> GetItemAsync(Guid id)
         {
-            return items.SingleOrDefault(x => x.Id == id);
+            return await Task.FromResult(items.SingleOrDefault(x => x.Id == id));
         }
 
-        public void CreateItem(Item item)
+        public async Task CreateItemAsync(Item item)
         {
             items.Add(item);
+            await Task.CompletedTask;
         }
 
-        public void UpdateItem(Item item)
+        public async Task UpdateItemAsync(Item item)
         {
             int itemIndex = items.FindIndex(x => item.Id == x.Id);
             items[itemIndex] = item;
+            await Task.CompletedTask;
         }
 
-        public void DeleteItem(Guid id)
+        public async Task DeleteItemAsync(Guid id)
         {
             int itemIndex = items.FindIndex(x => x.Id == id);
             items.RemoveAt(itemIndex);
+            await Task.CompletedTask;
         }
     }
 }
