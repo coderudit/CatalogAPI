@@ -2,6 +2,7 @@
 
 NuGet Packages
 MongoDB.Driver
+AspNetCore.HealthChecks.MongoDb
 
 Commands
 
