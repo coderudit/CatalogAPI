@@ -31,7 +31,7 @@ namespace CatalogAPI.Controllers
 
         //GET /items/id
         [HttpGet("{id}")]
-        public async Task<ActionResult<ItemDto>> GetItem(Guid id)
+        public async Task<ActionResult<ItemDto>> GetItemAsync(Guid id)
         {
             var item = await _repository.GetItemAsync(id);
             if (item is null)
@@ -42,17 +42,17 @@ namespace CatalogAPI.Controllers
 
         //POST /items
         [HttpPost]
-        public async Task<ActionResult<ItemDto>> CreateItem(CreateItemDto createItem)
+        public async Task<ActionResult<ItemDto>> CreateItemAsync(CreateItemDto createItem)
         {
             var item = createItem.AsModel();
             await _repository.CreateItemAsync(item);
 
-            return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto());
+            return CreatedAtAction(nameof(GetItemAsync), new { id = item.Id }, item.AsDto());
         }
 
         //PUT /items
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateItem(Guid id, UpdateItemDto updateItem)
+        public async Task<ActionResult> UpdateItemAsync(Guid id, UpdateItemDto updateItem)
         {
             var existingItem = await _repository.GetItemAsync(id);
 
@@ -72,7 +72,7 @@ namespace CatalogAPI.Controllers
 
         //DELETE /items
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteItem(Guid id)
+        public async Task<ActionResult> DeleteItemAsync(Guid id)
         {
             var existingItem = await _repository.GetItemAsync(id);
 
