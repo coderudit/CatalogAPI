@@ -2,7 +2,7 @@
 
 namespace CatalogAPI.Repository
 {
-    public class InMemItemsRepository : IRepository
+    public class InMemItemsRepository : IItemsRepository
     {
         private readonly List<Item> items = new() {
             new Item{Id = Guid.NewGuid(), Name ="Potion", Price = 9, CreatedDate = DateTimeOffset.UtcNow},
@@ -28,12 +28,12 @@ namespace CatalogAPI.Repository
         public void UpdateItem(Item item)
         {
             int itemIndex = items.FindIndex(x => item.Id == x.Id);
-            items[itemIndex] = item; 
+            items[itemIndex] = item;
         }
 
         public void DeleteItem(Guid id)
         {
-            int itemIndex = items.FindIndex(x => x.Id == id );
+            int itemIndex = items.FindIndex(x => x.Id == id);
             items.RemoveAt(itemIndex);
         }
     }

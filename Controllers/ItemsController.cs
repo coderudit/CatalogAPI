@@ -9,9 +9,9 @@ namespace CatalogAPI.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly IRepository _repository;
+        private readonly IItemsRepository _repository;
 
-        public ItemsController(IRepository repository)
+        public ItemsController(IItemsRepository repository)
         {
             _repository = repository;
         }

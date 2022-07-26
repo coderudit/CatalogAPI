@@ -2,7 +2,7 @@
 
 namespace CatalogAPI.Repository
 {
-    public interface IRepository
+    public interface IItemsRepository
     {
         IEnumerable<Item> GetItems();
 
